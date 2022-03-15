@@ -1,6 +1,6 @@
 project('craytracer', 'c',
   version : '0.1',
-  default_options : ['warning_level=3']
+  default_options : ['warning_level=3','c_std=c23']
   )
 
 
@@ -10,7 +10,9 @@ project_header_files = []
 inc = [include_directories('include')]
 subdir('include')
 subdir('src')
+#getting the current system compiler
 cc = meson.get_compiler('c')
+# add the math library so linux can recognize it
 m_dep = cc.find_library('m',required: false)
 
 executable('craytracer',
