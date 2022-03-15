@@ -1,8 +1,9 @@
-#include <color/color.h>
+#include "color/color.h"
+#include "ray/ray.h"
+#include "vec3/vec3.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <vec3/vec3.h>
-#define PROJECT_NAME "teeet"
+#define PROJECT_NAME "craytracer"
 const int image_width = 256;
 const int image_height = 256;
 int main() {

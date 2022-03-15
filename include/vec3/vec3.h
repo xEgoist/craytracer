@@ -10,12 +10,12 @@ typedef struct {
   double z;
 } Vec3;
 
-void add_vec3(Vec3 *rhs, Vec3 *lhs) {
-
-  rhs->x += lhs->x;
-  rhs->y += lhs->y;
-  rhs->z += lhs->z;
-  return;
+Vec3 add_vec3(Vec3 *rhs, Vec3 *lhs) {
+  return (Vec3){
+      rhs->x += lhs->x,
+      rhs->y += lhs->y,
+      rhs->z += lhs->z,
+  };
 }
 Vec3 mult_vec3(Vec3 *v, double t) {
   return (Vec3){v->x * t, v->y * t, v->z * t};
