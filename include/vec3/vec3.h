@@ -12,9 +12,9 @@ typedef struct {
 
 Vec3 add_vec3(Vec3 rhs, Vec3 lhs) {
   return (Vec3){
-      rhs.x += lhs.x,
-      rhs.y += lhs.y,
-      rhs.z += lhs.z,
+      rhs.x + lhs.x,
+      rhs.y + lhs.y,
+      rhs.z + lhs.z,
   };
 }
 Vec3 mult_vec3(Vec3 v, double t) {
@@ -33,18 +33,18 @@ void print_vec3(Vec3 v) {
 
 Vec3 sub_vec3(Vec3 rhs, Vec3 lhs) {
   return (Vec3) {
-  rhs.x -= lhs.x,
-  rhs.y -= lhs.y,
-  rhs.z -= lhs.z,
+  rhs.x - lhs.x,
+  rhs.y - lhs.y,
+  rhs.z - lhs.z,
 
   };
 }
 
 Vec3 multi_vec3(Vec3 v, Vec3 u) {
   return (Vec3){
-  v.x *= u.x,
-  v.y *= u.y,
-  v.z *= u.z,
+  v.x * u.x,
+  v.y * u.y,
+  v.z * u.z,
   };
 }
 
