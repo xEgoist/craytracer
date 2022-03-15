@@ -10,9 +10,11 @@ project_header_files = []
 inc = [include_directories('include')]
 subdir('include')
 subdir('src')
-
+cc = meson.get_compiler('c')
+m_dep = cc.find_library('m',required: false)
 
 executable('craytracer',
           main_source,
           include_directories: inc,
-          install : true)
+          install : true,
+          dependencies: m_dep)
