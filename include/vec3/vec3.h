@@ -3,7 +3,6 @@
 
 #include <math.h>
 #include <stdio.h>
-
 typedef struct {
   double x;
   double y;
@@ -17,11 +16,14 @@ Vec3 add_vec3(Vec3 rhs, Vec3 lhs) {
       rhs.z + lhs.z,
   };
 }
+
 Vec3 mult_vec3(Vec3 v, double t) {
   return (Vec3){v.x * t, v.y * t, v.z * t};
 }
 Vec3 div_vec3(Vec3 v, double t) { return mult_vec3(v, 1 / t); }
-double length_squared(Vec3 v) { return v.x * v.x + v.y * v.y + v.z * v.z; }
+double length_squared(Vec3 v) {
+  return v.x * v.x + v.y * v.y + v.z * v.z;
+}
 double length(Vec3 v) { return sqrt(length_squared(v)); }
 typedef Vec3 point3;
 typedef Vec3 color;
@@ -32,19 +34,19 @@ void print_vec3(Vec3 v) {
 }
 
 Vec3 sub_vec3(Vec3 rhs, Vec3 lhs) {
-  return (Vec3) {
-  rhs.x - lhs.x,
-  rhs.y - lhs.y,
-  rhs.z - lhs.z,
+  return (Vec3){
+      rhs.x - lhs.x,
+      rhs.y - lhs.y,
+      rhs.z - lhs.z,
 
   };
 }
 
 Vec3 multi_vec3(Vec3 v, Vec3 u) {
   return (Vec3){
-  v.x * u.x,
-  v.y * u.y,
-  v.z * u.z,
+      v.x * u.x,
+      v.y * u.y,
+      v.z * u.z,
   };
 }
 

@@ -1,9 +1,7 @@
 project('craytracer', 'c',
   version : '0.1',
-  default_options : ['warning_level=3','c_std=c11']
+  default_options : ['warning_level=3','c_std=c2x','buildtype=release','optimization=s','strip=true']
   )
-
-
 library_path = []
 project_sources = []
 project_header_files = []

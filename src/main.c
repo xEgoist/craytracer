@@ -1,4 +1,6 @@
 #include "color/color.h"
+#include "hittable/consts.h"
+#include "hittable/hittable_list.h"
 #include "ray/ray.h"
 #include "vec3/vec3.h"
 #include <stdio.h>
@@ -9,24 +11,23 @@ const int image_height = 256;
 
 double hit_sphere(point3 center, double radius, Ray r) {
   Vec3 oc = sub_vec3(r.orig, center);
-  double a = dot(r.dir, r.dir);
-  double b = 2.0 * dot(oc, r.dir);
-  double c = dot(oc, oc) - radius * radius;
-  double discrim = b * b - 4 * a * c;
+  double a = length_squared(r.dir);
+  double half_b = dot(oc, r.dir);
+  double c = length_squared(oc) - radius * radius;
+  double discrim = half_b * half_b - a * c;
   if (discrim < 0) {
     return -1.0;
   }
-  return (-b - sqrt(discrim)) / (2.0 * a);
+  return (-half_b - sqrt(discrim)) / a;
 }
 
-color ray_color(Ray r) {
-  double t = hit_sphere((point3){0, 0, -1}, 0.5, r);
-  if (t > 0.0) {
-    Vec3 N = unit_vector(sub_vec3(at(t, r), (Vec3){0, 0, -1}));
-    return mult_vec3((color){N.x + 1, N.y + 1, N.z + 1}, 0.5);
+color ray_color(Ray *r, hittable_list *world) {
+  hit_record rec;
+  if (hit_hittable_list(*world, r, 0, INFINITY, &rec)) {
+    return mult_vec3((add_vec3(rec.normal, (color){1, 1, 1})), 0.5);
   }
-  Vec3 unit_direction = unit_vector(r.dir);
-  t = 0.5 * (unit_direction.y + 1.0);
+  Vec3 unit_direction = unit_vector(r->dir);
+  double t = 0.5 * (unit_direction.y + 1.0);
   color cc = mult_vec3((color){1.0, 1.0, 1.0}, (1.0 - t));
   color multit = mult_vec3((color){0.5, 0.7, 1.0}, t);
   return add_vec3(cc, multit);
@@ -48,7 +49,9 @@ int main() {
   Vec3 orig_horiz_vert = sub_vec3(orig_horiz, vert_2);
   Vec3 lower_left_corner =
       sub_vec3(orig_horiz_vert, (Vec3){0, 0, focal_length});
-
+  hittable_list world = new_hittable_list();
+  add_hittable_list(&world, (sphere){(point3){0, 0, -1}, 0.5});
+  add_hittable_list(&world, (sphere){(point3){0, -100.5, -1}, 100});
   printf("P3\n%d %d\n255\n", image_width, image_height);
   for (int j = image_height - 1; j >= 0; --j) {
     fprintf(stderr, "\rScanLines Remaining: %d ", j);
@@ -63,7 +66,7 @@ int main() {
       Vec3 uuhvv = add_vec3(luh, vv);
       Vec3 minusorig = sub_vec3(uuhvv, origin);
       Ray r = {origin, minusorig};
-      color pixel_color = ray_color(r);
+      color pixel_color = ray_color(&r, &world);
       write_color(pixel_color);
     }
   }
