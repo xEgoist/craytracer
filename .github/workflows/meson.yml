@@ -20,7 +20,7 @@ jobs:
     - run: pip install meson ninja
     - run: meson setup builddir/
       env:
-        CC: gcc
+        CC: clang
     - run: meson compile -C builddir/ -v
     - uses: actions/upload-artifact@v1
       if: failure()
@@ -39,7 +39,7 @@ jobs:
     - run: pip install meson ninja
     - run: meson setup builddir/
       env:
-        CC: gcc
+        CC: clang
     - run: meson compile -C builddir/ -v
     - uses: actions/upload-artifact@v1
       if: failure()
@@ -54,10 +54,10 @@ jobs:
     - uses: actions/setup-python@v1
       with:
         python-version: '3.x'
-    - run: pip install meson ninja
+    - run: pip install meson ninja clang
     - run: meson setup builddir/
       env:
-        CC: gcc
+        CC: clang
     - run: meson compile -C builddir/ -v
     - uses: actions/upload-artifact@v1
       if: failure()

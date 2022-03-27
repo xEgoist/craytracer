@@ -2,7 +2,7 @@
 #define HITTABLE_LIST_H
 
 #include "hittable.h"
-
+#include <stdlib.h>
 typedef struct hittable_list {
     sphere* objects;
     long idx;
